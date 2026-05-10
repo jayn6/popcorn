@@ -690,12 +690,22 @@
     <a href="/" class="logo"><span>🍿</span> Popcorn</a>
 
     <ul class="nav-links">
-      <li><a href="/home" class="active">Home</a></li>
-      <li><a href="/movies">Movies</a></li>
-      <li><a href="/watchlist">Watchlist</a></li>
-      <li><a href="/community">Community</a></li>
-      <li><a href="/profile">Profile</a></li>
-    </ul>
+  <li><a href="/home" class="active">Home</a></li>
+  <li><a href="/movies">Movies</a></li>
+  <li><a href="/watchlist">Watchlist</a></li>
+  <li><a href="/community">Community</a></li>
+
+  @auth
+    <li><a href="/profile">{{ auth()->user()->name }}</a></li>
+  @endauth
+
+  @guest
+    <li><a href="/login">Login</a></li>
+  @endguest
+<form method="POST" action="/logout">
+    @csrf
+    <li><button>Logout</button></li>
+</form></ul>
 
     <div class="nav-actions">
       <div class="nav-avatar">JD</div>
