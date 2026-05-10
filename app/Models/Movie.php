@@ -6,6 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
-    //
-    
+    public $timestamps = false;
+
+    protected $fillable = [
+
+        'title',
+        'description',
+        'poster',
+        'genre',
+        'year',
+        'rate',
+        'actors',
+        'type' , 
+
+    ];
 }

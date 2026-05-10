@@ -69,7 +69,7 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
 
       <div class="movie-card">
         <span class="rank-badge">{{ $movie->rank }}</span>
-        <img class="movie-poster" src="{{ asset('images/' . $movie->poster) }}" alt="{{ $movie->title }}">
+        <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
         <div class="movie-overlay-hover"><div class="play-btn"><a href="/movie/{{ $movie->id }}">▶</a></div></div>
         <div class="movie-info">
@@ -102,7 +102,7 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
 
       <div class="movie-card">
         <span class="rank-badge">{{ $movie->rank }}</span>
-        <img class="movie-poster" src="{{ asset('images/' . $movie->poster) }}" alt="{{ $movie->title }}">
+        <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
         <div class="movie-overlay-hover"><div class="play-btn"  ><a href="/movie/{{ $movie->id }}">▶</a></div></div>
         <div class="movie-info">
@@ -134,7 +134,7 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
 
       <div class="movie-card">
         <span class="rank-badge">{{ $movie->rank }}</span>
-        <img class="movie-poster" src="{{ asset('images/' . $movie->poster) }}" alt="{{ $movie->title }}">
+        <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
         <div class="movie-overlay-hover"><div class="play-btn"><a href="/movie/{{ $movie->id }}">▶</a></div></div>
         <div class="movie-info">

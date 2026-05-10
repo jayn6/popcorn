@@ -238,7 +238,7 @@
 
     <!-- BACKGROUND IMAGE -->
     <div class="hero-backdrop"
-         style="background-image:url('{{ asset('images/' . $movie->banner) }}')">
+         style="background-image:url('{{ $movie->banner }}')">
     </div>
 
     <!-- DARK OVERLAY -->
@@ -252,7 +252,7 @@
 
             <!-- POSTER -->
             <div class="poster-box">
-                <img src="{{ asset('images/' . $movie->poster) }}" alt="">
+                <img src="{{ $movie->poster }}" alt="">
             </div>
 
         </div>
@@ -269,7 +269,7 @@
                 <span>•</span>
                 <span>{{ $movie->genre }}</span>
                 <span>•</span>
-                <span>★ {{ $movie->rating }}</span>
+                <span>★ {{ $movie->rate}}</span>
             </div>
 
             <p class="movie-description">
@@ -278,13 +278,10 @@
 
             <!-- TAGS -->
             <div class="movie-tags">
-
-                <span>Drama</span>
-                <span>Adventure</span>
-                <span>Sci-Fi</span>
-                <span>Fantasy</span>
-                <span>Epic</span>
-
+                <p style="color: #aaa; font-size: 16px; margin-bottom: 5px;">Actors:</p>
+                <p class="movie-actors">
+                    {{ $movie->actors }}
+                </p>1 min men samet
             </div>
 
             <!-- REVIEWS -->
