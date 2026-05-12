@@ -13,7 +13,11 @@ use Illuminate\Notifications\Notifiable;
 #[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
-{     public $timestamps = false;
+{
+    public $timestamps = false;
+    protected $primaryKey = 'id_user';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
     'name',

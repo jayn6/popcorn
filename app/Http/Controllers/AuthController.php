@@ -18,16 +18,18 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
-        ]);
+        ]);        
+
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
             'email' => 'Invalid credentials'
         ]);
+        
     }
 
     public function logout(Request $request)
@@ -50,7 +52,7 @@ public function register(Request $request)
     $request->validate([
         'name' => 'required',
         'email' => 'required|email|unique:users',
-        'password' => 'required|min:6'
+        'password' => 'required|min:6|confirmed'
     ]);
 
     $user = User::create([
@@ -62,6 +64,8 @@ public function register(Request $request)
 
     Auth::login($user);
 
-    return redirect()->route('/');
+    $request->session()->regenerate();
+
+    return redirect()->route('home');
 }
 }

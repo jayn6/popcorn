@@ -101,6 +101,38 @@
       align-items: center;
       gap: 1rem;
     }
+    .nav-user-name {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .nav-auth-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-auth-link:hover {
+      color: var(--yellow);
+    }
+    .nav-logout-btn {
+      background: transparent;
+      border: 1px solid rgba(250, 204, 21, 0.4);
+      color: var(--yellow);
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-logout-btn:hover {
+      background: var(--yellow);
+      color: #0b0b0f;
+    }
     .nav-avatar {
       width: 38px; height: 38px;
       border-radius: 50%;
@@ -688,27 +720,38 @@
 <body>
 <nav>
     <a href="/" class="logo"><span>🍿</span> Popcorn</a>
-
-    <ul class="nav-links">
-  <li><a href="/home" class="active">Home</a></li>
-  <li><a href="/movies">Movies</a></li>
+<ul class="nav-links">
+  <li><a href="/" class="active">Home</a></li>
+  <li><a href="/list">Movies</a></li>
   <li><a href="/watchlist">Watchlist</a></li>
   <li><a href="/community">Community</a></li>
+  <li><a href="/admin/movie/create">add movies</a></li>
 
   @auth
-    <li><a href="/profile">{{ auth()->user()->name }}</a></li>
+      <li><a href="#">{{ auth()->user()->name }}</a></li>
+
+      <li>
+          <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+              @csrf
+              <button type="submit" class="nav-logout-btn">Logout</button>
+          </form>
+      </li>
   @endauth
 
   @guest
-    <li><a href="/login">Login</a></li>
+      <li><a href="/login">Login</a></li>
+      <li><a href="/register">Register</a></li>
   @endguest
-<form method="POST" action="/logout">
-    @csrf
-    <li><button>Logout</button></li>
-</form></ul>
+</ul>
 
     <div class="nav-actions">
-      <div class="nav-avatar">JD</div>
+      @auth
+        <span class="nav-user-name">{{ auth()->user()->name }}</span>
+        <div class="nav-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+      @else
+        <a href="{{ route('login') }}" class="nav-auth-link">Login</a>
+        <a href="{{ route('register') }}" class="nav-auth-link">Register</a>
+      @endauth
     </div>
   </nav>
     @yield('content')

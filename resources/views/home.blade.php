@@ -130,7 +130,7 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
     <br>
     <div class="scroll-row">
 
-       <@foreach($upcoming as $movie)
+      @foreach($upcoming as $movie)
 
       <div class="movie-card">
         <span class="rank-badge">{{ $movie->rank }}</span>

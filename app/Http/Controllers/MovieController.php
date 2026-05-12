@@ -56,5 +56,10 @@ class MovieController extends Controller
         return redirect('/');
 
     }
+    public function index(){
+            $movies = Movie::all(); // get all movies from DB
+
+    return view('list', compact('movies'));
+    }
 
 }
