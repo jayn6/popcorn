@@ -62,4 +62,12 @@ class MovieController extends Controller
     return view('list', compact('movies'));
     }
 
+    public function destroy($id){
+    $movie = Movie::findOrFail($id);
+
+    $movie->delete();
+
+    return redirect('/');
+}
+
 }

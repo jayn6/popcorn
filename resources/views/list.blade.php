@@ -34,21 +34,22 @@
     </td>
       </select>
     </td>
-      <td>
-        <form method="POST" action="/movie/{{ $movie->id }}" style="display:inline;">
-          @csrf
-          @method('DELETE')
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-    </tr>    @endforeach
+     <td>
+        <form action="/movie/{{ $movie->id }}" method="POST">
 
-    <tr>
-      <td colspan="5">
-        <form method="POST" action="/movie/{{ $movie->id }}" style="display:inline;">
-          <button type="submit" class="btn btn-danger">Delete</button>
+          @csrf
+
+          @method('DELETE')
+
+          <button type="submit">
+            Delete Movie
+          </button>
+
         </form>
-      </td>
-    </tr>
+    </td>
+       @endforeach
+
+    
   
 
   </table>
