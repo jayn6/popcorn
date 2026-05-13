@@ -238,7 +238,7 @@
 
     <!-- BACKGROUND IMAGE -->
     <div class="hero-backdrop"
-         style="background-image:url('{{ $movie->banner }}')">
+         style="background-image:url('{{ $movie->poster }}')">
     </div>
 
     <!-- DARK OVERLAY -->
@@ -281,7 +281,7 @@
                 <p style="color: #aaa; font-size: 16px; margin-bottom: 5px;">Actors:</p>
                 <p class="movie-actors">
                     {{ $movie->actors }}
-                </p>1 min men samet
+                </p>
             </div>
 
             <!-- REVIEWS -->

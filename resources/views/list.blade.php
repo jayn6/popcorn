@@ -7,12 +7,55 @@
 @extends('layouts.app')
 
 @section('content')
+<br>
+<br>
   <section class="section">
 
   <div class="scroll-row">
+@if(auth()->user()->role === 'admin')
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Genre</th>
+      <th>Rating</th>
+      <th>Type</th>
+    </tr>
+    @foreach($movies as $movie)
+    <tr>
+      <td><input type="text" value="{{ $movie->title }}"></td>
+      <td><input type="number" value="{{ $movie->year }}"></td>
+      <td><input type="text" value="{{ $movie->genre }}"></td>
+      <td><input type="number" step="0.1" value="{{ $movie->rate }}"></td>
+      <td>
+        <select name="" id=""><option value="">upcoming</option>
+      <option value="">top_rated</option>
+      <option value="">trending</option></select>
+    </td>
+      </select>
+    </td>
+      <td>
+        <form method="POST" action="/movie/{{ $movie->id }}" style="display:inline;">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </tr>    @endforeach
+
+    <tr>
+      <td colspan="5">
+        <form method="POST" action="/movie/{{ $movie->id }}" style="display:inline;">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+  
+
+  </table>
+@else
 
       <!-- Card 1 -->
-@foreach($movies as $movie)
+      @foreach($movies as $movie)
       <div class="movie-card">
         <span class="rank-badge">{{ $movie->rank }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
@@ -29,6 +72,9 @@
         </div>
       </div>
       @endforeach
+  
+@endif
+
 </section>
 
     </div>

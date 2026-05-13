@@ -57,7 +57,7 @@ class MovieController extends Controller
 
     }
     public function index(){
-            $movies = Movie::all(); // get all movies from DB
+            $movies = Movie::all();
 
     return view('list', compact('movies'));
     }

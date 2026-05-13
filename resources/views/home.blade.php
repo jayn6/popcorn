@@ -68,7 +68,7 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
        @foreach($trending as $movie)
 
       <div class="movie-card">
-        <span class="rank-badge">{{ $movie->rank }}</span>
+        <span class="rank-badge">{{ $movie->year }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
         <div class="movie-overlay-hover"><div class="play-btn"><a href="/movie/{{ $movie->id }}">▶</a></div></div>
@@ -101,7 +101,7 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
       @foreach($topRated as $movie)
 
       <div class="movie-card">
-        <span class="rank-badge">{{ $movie->rank }}</span>
+        <span class="rank-badge">{{ $movie->year }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
         <div class="movie-overlay-hover"><div class="play-btn"  ><a href="/movie/{{ $movie->id }}">▶</a></div></div>
@@ -133,7 +133,7 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
       @foreach($upcoming as $movie)
 
       <div class="movie-card">
-        <span class="rank-badge">{{ $movie->rank }}</span>
+        <span class="rank-badge">{{ $movie->year }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
         <div class="movie-overlay-hover"><div class="play-btn"><a href="/movie/{{ $movie->id }}">▶</a></div></div>
@@ -143,7 +143,8 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
             <span class="stars">
               <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
             </span>
-{{ $movie->rate }}          </div>
+            {{ $movie->rate }}
+          </div>
         </div>
       </div>
       @endforeach

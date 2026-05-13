@@ -480,15 +480,20 @@
     .star.filled { color: var(--yellow); }
     .star.half { color: var(--yellow); opacity: 0.5; }
     .star.empty { color: var(--muted); }
-
+  a{
+    text-decoration: none;
+    color:inherit;
+  }
     /* ── RANK BADGE ── */
     .rank-badge {
       position: absolute;
-      top: 0.5rem; left: 0.5rem;
-      background: linear-gradient(135deg, var(--yellow), var(--orange));
-      color: #0b0b0f;
+      top: 0.5rem; right: 0.92rem;
+      color:    rgb(215, 215, 215),black;
+      text-shadow: 2px 2px 4px rgb(0, 0, 0);
+      background: linear-gradient( rgba(248, 217, 97, 0.47), rgba(219,132,69,0.4));
+
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.85rem;
+      font-size: 1rem;
       width: 24px; height: 24px;
       border-radius: 0.3rem;
       display: flex; align-items: center; justify-content: center;
@@ -725,8 +730,9 @@
   <li><a href="/list">Movies</a></li>
   <li><a href="/watchlist">Watchlist</a></li>
   <li><a href="/community">Community</a></li>
+  @if(auth()->check() && auth()->user()->role === 'admin')
   <li><a href="/admin/movie/create">add movies</a></li>
-
+  @endif
   @auth
       <li><a href="#">{{ auth()->user()->name }}</a></li>
 
