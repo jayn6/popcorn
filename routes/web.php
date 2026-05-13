@@ -23,3 +23,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/movie/store', [MovieController::class, 'store'])->name('admin.movie.store');
 });
 
+Route::delete('/movie/{id}',
+    [MovieController::class, 'destroy']
+);
+Route::put('/movie/{id}',
+    [MovieController::class, 'update']
+);

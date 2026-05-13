@@ -22,33 +22,79 @@
       <th>Type</th>
     </tr>
     @foreach($movies as $movie)
-    <tr>
-      <td><input type="text" value="{{ $movie->title }}"></td>
-      <td><input type="number" value="{{ $movie->year }}"></td>
-      <td><input type="text" value="{{ $movie->genre }}"></td>
-      <td><input type="number" step="0.1" value="{{ $movie->rate }}"></td>
-      <td>
-        <select name="" id=""><option value="">upcoming</option>
-      <option value="">top_rated</option>
-      <option value="">trending</option></select>
-    </td>
-      </select>
-    </td>
-      <td>
-        <form method="POST" action="/movie/{{ $movie->id }}" style="display:inline;">
-          @csrf
-          @method('DELETE')
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-    </tr>    @endforeach
 
-    <tr>
-      <td colspan="5">
-        <form method="POST" action="/movie/{{ $movie->id }}" style="display:inline;">
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-      </td>
-    </tr>
+<tr>
+
+<form action="/movie/{{ $movie->id }}" method="POST">
+
+    @csrf
+    @method('PUT')
+
+    <td>
+        <input type="text"
+               name="title"
+               value="{{ $movie->title }}">
+    </td>
+
+    <td>
+        <input type="number"
+               name="year"
+               value="{{ $movie->year }}">
+    </td>
+    <td>
+        <input type="text"
+               name="genre"
+               value="{{ $movie->genre }}">
+    </td>
+    <td>
+        <input type="number"
+               step="0.1"
+               name="rate"
+               value="{{ $movie->rate }}">
+    </td>
+    <td>
+        <select name="type">
+            <option value="upcoming"
+                @if($movie->type == 'upcoming') selected @endif>
+                upcoming
+            </option>
+
+            <option value="top_rated"
+                @if($movie->type == 'top_rated') selected @endif>
+                top rated
+            </option>
+
+            <option value="trending"
+                @if($movie->type == 'trending') selected @endif>
+                trending
+            </option>
+
+        </select>
+    </td>    <td>
+        <button type="submit">
+            Save
+        </button>
+    </td>
+
+</form>
+
+<td>
+    <form action="/movie/{{ $movie->id }}" method="POST">
+
+        @csrf
+        @method('DELETE')
+
+        <button type="submit">
+            Delete
+        </button>
+
+    </form>
+</td>
+
+</tr>
+
+@endforeach
+    
   
 
   </table>
