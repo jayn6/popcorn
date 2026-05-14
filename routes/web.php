@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\WatchlistController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -29,3 +31,11 @@ Route::delete('/movie/{id}',
 Route::put('/movie/{id}',
     [MovieController::class, 'update']
 );
+
+Route::post('/reviews', [ReviewController::class, 'store'])
+->middleware('auth')
+->name('reviews.store');
+
+Route::get('/community', [ReviewController::class, 'community'])->name('community');
+Route::post('/watchlist/add/{movie}', [WatchlistController::class, 'add'])->name('watchlist.add');
+Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');

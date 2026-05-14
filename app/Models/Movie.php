@@ -20,4 +20,9 @@ class Movie extends Model
         'type' , 
 
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'id_movie');
+    }
 }

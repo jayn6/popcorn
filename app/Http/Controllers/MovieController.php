@@ -62,7 +62,12 @@ class MovieController extends Controller
     return view('list', compact('movies'));
     }
     public function update(Request $request, $id){
-        $movie = Movie::findOrFail($id);
+        $movie = Movie::with([
+            'reviews.user',
+            'reviews'=> function($query){
+                $query->orderBy('created_at', 'desc');
+            }
+        ])->findOrFail($id);
 
         $movie->title = $request->title;
         $movie->description = $request->description;

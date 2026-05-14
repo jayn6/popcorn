@@ -228,6 +228,96 @@
     }
 
 }
+
+/* REVIEW FORM */
+.review-form-box{
+    margin-top:20px;
+
+    background:#111827;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    border:1px solid #1f2937;
+
+    max-width:600px;
+}
+
+.review-form-box form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.review-input{
+    background:#0f172a;
+
+    border:1px solid #374151;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    color:white;
+
+    resize:none;
+
+    font-size:15px;
+}
+
+.review-input:focus{
+    outline:none;
+
+    border-color:#4ade80;
+}
+
+.rating-input{
+    width:160px;
+
+    background:#0f172a;
+
+    border:1px solid #374151;
+
+    border-radius:10px;
+
+    padding:12px;
+
+    color:white;
+}
+
+.rating-input:focus{
+    outline:none;
+
+    border-color:#facc15;
+}
+
+.submit-review-btn{
+    width:200px;
+
+    background:#4ade80;
+
+    color:#111827;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.submit-review-btn:hover{
+    transform:translateY(-2px);
+
+    background:#22c55e;
+}
+
 </style>
 @extends('layouts.app')
 
@@ -284,32 +374,57 @@
                 </p>
             </div>
 
+            @if(auth()->check())
+
+            <div id="reviewForm" class="review-form-box" style="display:none">
+
+                <form action="{{ route('reviews.store') }}" method="POST">
+                    @csrf
+
+                    <input type="hidden" name="id_movie" value="{{ $movie->id }}">
+
+                    <textarea name="review_text" rows="4" placeholder="Write your review..." class="review-input">
+                    </textarea>
+                    <div>
+                        <input type="number" name="rating" min="1" max="10" placeholder="Rating (1-10)" class="rating-input">
+
+                        <button type="submit" class="submit-review-btn">
+                            Submit
+                        </button>
+                    </div>
+                    
+
+                </form>
+
+            </div>
+
+            @endif
+
             <!-- REVIEWS -->
             <div class="review-section">
 
                 <h2>Popular Reviews</h2>
 
+                @foreach($movie-> reviews as $review)
                 <div class="review-card">
                     <div class="review-user">
-                        🍿 Nour
+                        @php
+                        $stars = round($review->rating / 2);
+                        @endphp
+                        <div style="color:#facc15;">
+                            {{ str_repeat('★', $stars) }}
+                            {{ str_repeat('☆', 5 - $stars) }}
+                        </div>
+                        • {{ $review->user->name }}
+                        {{$review->rating}}/10
                     </div>
-
                     <div class="review-text">
-                        This movie was visually insane.
-                        The cinematography felt unreal.
+                        {{ $review->review_text }}
                     </div>
                 </div>
+                @endforeach
 
-                <div class="review-card">
-                    <div class="review-user">
-                        🎬 Alex
-                    </div>
-
-                    <div class="review-text">
-                        One of the best cinema experiences
-                        I've had recently.
-                    </div>
-                </div>
+                
 
             </div>
 
@@ -321,20 +436,23 @@
             <div class="action-box">
 
                 <button>♡ Like</button>
-                <button>★ Rate</button>
-                <button>➕ Watchlist</button>
+                <button onclick="toggleReviewForm()">★ Rate</button>
+                <form action="/watchlist/add/{{ $movie->id }}" method="POST">
+                    @csrf
+                    <button type="submit">➕ Watchlist</button>
+                </form>
 
             </div>
 
             <div class="stats-box">
 
                 <div class="stat">
-                    <h3>4.5</h3>
+                    <h3>{{ number_format($movie->reviews->avg('rating'), 1) }}</h3>
                     <p>Average Rating</p>
                 </div>
 
                 <div class="stat">
-                    <h3>12K</h3>
+                    <h3>{{ $movie->reviews->count() }}</h3>                    
                     <p>Reviews</p>
                 </div>
 
@@ -347,3 +465,14 @@
 </section>
 
 @endsection
+
+<script>
+    function toggleReviewForm() {
+        const form = document.getElementById('reviewForm');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
