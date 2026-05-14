@@ -18,6 +18,7 @@ class Movie extends Model
         'rate',
         'actors',
         'type' , 
+        'imdb_id',
 
     ];
 

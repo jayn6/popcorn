@@ -48,6 +48,7 @@ class MovieController extends Controller
 
             'rate' => $movie['imdbRating'],
             'actors' => $movie['Actors'],
+            'imdb_id' => $movie['imdbID'], 
 
 
 
@@ -81,11 +82,12 @@ class MovieController extends Controller
     }
     
     public function destroy($id){
-    $movie = Movie::findOrFail($id);
+        $movie = Movie::findOrFail($id);
 
-    $movie->delete();
+        $movie->delete();
 
-    return redirect('/');
-}
+        return redirect('/');
+    }
 
+   
 }

@@ -441,6 +441,10 @@
                     @csrf
                     <button type="submit">➕ Watchlist</button>
                 </form>
+                <a href="https://www.playimdb.com/{{ $movie->title }}/{{ $movie->imdb_id }}" target="_blank">
+                    <button>watch</button>
+
+                </a>
 
             </div>
 
