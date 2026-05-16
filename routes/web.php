@@ -7,7 +7,8 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WatchlistController;
-
+use App\Http\Controllers\ProfileController;
+ 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -35,8 +36,11 @@ Route::put('/movie/{id}',
 Route::post('/reviews', [ReviewController::class, 'store'])
 ->middleware('auth')
 ->name('reviews.store');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
 Route::get('/community', [ReviewController::class, 'community'])->name('community');
 Route::post('/watchlist/add/{movie}', [WatchlistController::class, 'add'])->name('watchlist.add');
 Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
 Route::post('/movie/fetch', [MovieController::class, 'store']);
+Route::get('/edit', [HomeController::class, 'edit'])->name('edit');
+
+Route::put('/update', [HomeController::class, 'update'])->name('update');

@@ -721,142 +721,138 @@
     .scroll-row .movie-card:nth-child(7) { animation-delay: 0.35s; }
     .scroll-row .movie-card:nth-child(8) { animation-delay: 0.40s; }
   
-    
-/* NAV */
+/* NAVBAR AVATAR */
 .nav-avatar{
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
     border-radius:50%;
     cursor:pointer;
+    object-fit:cover;
 }
 
 /* BACKDROP */
 #profileBackdrop{
     display:none;
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    backdrop-filter: blur(10px);
-    background: rgba(0,0,0,0.4);
-    z-index: 100;
+    inset:0;
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.6);
+    z-index:100;
 }
 
-/* PROFILE MODAL */
-#profileModal{
+/* PROFILE PANEL */
+#profilePanel{
     display:none;
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    z-index:101;
-}
+    width:850px;
+    max-height:90vh;
+    overflow-y:auto;
 
-/* CARD */
-.profile-card{
-    width:380px;
-    background:white;
-    padding:20px;
+    background:#14181c;
     border-radius:20px;
-    text-align:center;
+
+    padding:30px;
+
+    z-index:101;
+
+    box-shadow:0 0 40px rgba(0,0,0,0.5);
+
+    color:white;
 }
 
-/* HEADER */
-.profile-header{
+/* TOP */
+.profile-top{
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:20px;
+    margin-bottom:35px;
 }
 
 /* AVATAR */
-.avatar-wrapper{
-    position:relative;
-}
-
-.avatar-img{
-    width:80px;
-    height:80px;
+.profile-avatar{
+    width:110px;
+    height:110px;
     border-radius:50%;
     object-fit:cover;
+    border:3px solid #2c3440;
 }
 
-/* EDIT ICON */
-.edit-icon{
-    position:absolute;
-    bottom:0;
-    right:0;
-    background:black;
+/* INFO */
+.profile-info h2{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.profile-info p{
+    color:#9ab;
+    margin-bottom:15px;
+}
+
+/* BUTTON */
+.profile-info button{
+    background:#445566;
     color:white;
-    padding:5px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:12px;
-}
-
-/* STATS */
-.stats{
-    display:flex;
-    justify-content:space-between;
-    margin:15px 0;
-}
-
-.stat-box{
-    width:48%;
-    background:#f5f5f5;
-    padding:10px;
-    border-radius:10px;
-}
-
-/* FAVORITES */
-.favorites ul{
-    list-style:none;
-    padding:0;
-}
-
-.favorites li{
-    background:#eee;
-    margin:5px 0;
-    padding:5px;
-    border-radius:5px;
-}
-
-/* EDIT BUTTON */
-.edit-btn{
-    background:black;
-    color:white;
-    padding:10px;
     border:none;
-    border-radius:10px;
-    margin-top:10px;
+    padding:10px 18px;
+    border-radius:8px;
     cursor:pointer;
 }
 
-/* EDIT MODAL */
-#editModal{
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    z-index:102;
+/* SECTION */
+.section{
+    margin-bottom:35px;
 }
 
-/* EDIT CARD */
-.edit-card{
-    width:350px;
-    background:white;
-    padding:20px;
-    border-radius:15px;
+.section-header{
+    margin-bottom:15px;
+    border-bottom:1px solid #2c3440;
+    padding-bottom:10px;
+}
+
+/* MOVIE GRID */
+.movie-grid{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+/* POSTER */
+.movie-poster{
+    width:120px;
+    height:180px;
+    object-fit:cover;
+    border-radius:10px;
+
+    transition:0.3s;
+}
+
+.movie-poster:hover{
+    transform:scale(1.05);
+}
+
+/* REVIEWS */
+.reviews{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:15px;
 }
 
-.avatar-img-small{
-    width:60px;
-    height:60px;
-    border-radius:50%;
+/* REVIEW CARD */
+.review-card{
+    background:#1c2228;
+    padding:15px;
+    border-radius:12px;
+}
+
+.review-card h4{
+    margin-bottom:8px;
+}
+
+.review-card p{
+    color:#9ab;
 }
   </style>
 </head>
@@ -951,134 +947,90 @@
   <!-- BACKDROP -->
 <div id="profileBackdrop"></div>
 
-<!-- PROFILE MODAL -->
-<div id="profileModal">
+<!-- PROFILE PANEL -->
+<div id="profilePanel">
 
-    <div class="profile-card">
+    <!-- TOP -->
+    <div class="profile-top">
 
-        <!-- HEADER -->
-        <div class="profile-header">
+        <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+             class="profile-avatar">
 
-            <div class="avatar-wrapper">
+        <div class="profile-info">
+            <h2>{{ auth()->user()->name }}</h2>
+            <p>{{ auth()->user()->email }}</p>
 
-                <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
-                     id="avatarPreview"
-                     class="avatar-img">
-
-                <label for="avatarInput" class="edit-icon">✏️</label>
-
-            </div>
-
-            <div>
-                <h2>{{ auth()->user()->name }}</h2>
-                <p>{{ auth()->user()->email }}</p>
-            </div>
-
-        </div>
-
-        <!-- STATS -->
-        <div class="stats">
-
-            <div class="stat-box">
-                <h3>🎬 {{ auth()->user()->movies_watched ?? 0 }}</h3>
-                <p>Watched</p>
-            </div>
-
-            <div class="stat-box">
-                <h3>❤️ 5</h3>
-                <p>Favorites</p>
-            </div>
-
-        </div>
-
-        <!-- FAVORITES -->
-        <div class="favorites">
-            <h3>⭐ Favorites</h3>
-            <ul>
-                <li>Movie 1</li>
-                <li>Movie 2</li>
-                <li>Movie 3</li>
-                <li>Movie 4</li>
-                <li>Movie 5</li>
-            </ul>
-        </div>
-
-        <!-- EDIT BUTTON -->
-        <button id="openEdit" class="edit-btn">Edit Profile</button>
+<a href="{{ route('edit') }}">
+    <button>Edit Profile</button>
+</a>        </div>
 
     </div>
-</div>
 
-<!-- EDIT MODAL -->
-<div id="editModal">
+    <!-- WATCHLIST -->
+    <div class="section">
 
-    <form action="{{ route('profile.update') }}"
-          method="POST"
-          enctype="multipart/form-data"
-          class="edit-card">
-
-        @csrf
-        @method('PUT')
-
-        <h3>Edit Profile</h3>
-
-        <!-- AVATAR -->
-        <div class="avatar-edit">
-            <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
-                 id="avatarPreview2"
-                 class="avatar-img-small">
-
-            <label for="avatarInput" class="edit-icon">✏️</label>
-            <input type="file" name="avatar" id="avatarInput" hidden>
+        <div class="section-header">
+            <h3>Watchlist</h3>
         </div>
 
-        <input type="text" name="name" value="{{ auth()->user()->name }}">
-        <input type="email" name="email" value="{{ auth()->user()->email }}">
+        <div class="movie-grid">
 
-        <button type="submit">Save</button>
-        <button type="button" id="closeEdit">Cancel</button>
+            @foreach($watchlist ?? [] as $movie)
 
-    </form>
+                <img src="{{ $movie->poster }}"
+                     class="movie-poster">
+
+            @endforeach
+
+        </div>
+
+    </div>
+
+    <!-- RECENT REVIEWS -->
+    <div class="section">
+
+        <div class="section-header">
+            <h3>Recent Reviews</h3>
+        </div>
+
+        <div class="reviews">
+
+            <div class="review-card">
+                <h4>Spider-Man: Into the Spider-Verse</h4>
+                <p>Amazing animation and soundtrack.</p>
+            </div>
+
+            <div class="review-card">
+                <h4>How to Train Your Dragon</h4>
+                <p>Beautiful movie and emotional ending.</p>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
+   </body>
 <script>
 
+const openProfile = document.getElementById("openProfile");
+const profilePanel = document.getElementById("profilePanel");
 const backdrop = document.getElementById("profileBackdrop");
-const profileModal = document.getElementById("profileModal");
-const editModal = document.getElementById("editModal");
 
-// OPEN PROFILE
-document.getElementById("openProfile").onclick = function () {
-    profileModal.style.display = "block";
+// OPEN
+openProfile.onclick = function(){
+
+    profilePanel.style.display = "block";
     backdrop.style.display = "block";
+
 };
 
-// OPEN EDIT
-document.getElementById("openEdit").onclick = function () {
-    editModal.style.display = "block";
-};
+// CLOSE
+backdrop.onclick = function(){
 
-// CLOSE EDIT
-document.getElementById("closeEdit").onclick = function () {
-    editModal.style.display = "none";
-};
-
-// CLICK BACKDROP CLOSE ALL
-backdrop.onclick = function () {
-    profileModal.style.display = "none";
-    editModal.style.display = "none";
+    profilePanel.style.display = "none";
     backdrop.style.display = "none";
-};
 
-// IMAGE PREVIEW
-document.getElementById("avatarInput").onchange = function (event) {
-    const reader = new FileReader();
-
-    reader.onload = function () {
-        document.getElementById("avatarPreview").src = reader.result;
-        document.getElementById("avatarPreview2").src = reader.result;
-    };
-
-    reader.readAsDataURL(event.target.files[0]);
 };
 
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\user;
 
 class ProfileController extends Controller
 {
@@ -17,18 +18,15 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'avatar' => 'nullable|string|max:30',
+        ]);
 
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $file->storeAs('public', $filename);
-            $user->avatar = $filename;
-        }
-
+        $user->fill($data);
         $user->save();
 
-        return back();
+        return redirect('/');
     }
 }

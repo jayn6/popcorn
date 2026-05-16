@@ -18,4 +18,43 @@ public function index(){
 
     return view('home', compact('trending', 'topRated', 'upcoming', 'series'));
     }
+
+    public function edit()
+{
+    return view('edit');
+}
+public function update(Request $request)
+{
+    $user = auth()->user();
+
+    // VALIDATION
+    $request->validate([
+        'name' => 'required|max:255',
+        'email' => 'required|email|max:255',
+        'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+    ]);
+
+    // UPDATE NAME + EMAIL
+    $user->name = $request->name;
+    $user->email = $request->email;
+
+    // UPDATE AVATAR
+    if ($request->hasFile('avatar')) {
+
+        $file = $request->file('avatar');
+
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+
+        // save in storage/app/public/avatars
+        $file->storeAs('public/avatars', $filename);
+
+        // save path in DB
+        $user->avatar = 'avatars/' . $filename;
+    }
+
+    $user->save();
+
+    return redirect()->route('home')
+                     ->with('success', 'Profile updated!');
+}
 }
