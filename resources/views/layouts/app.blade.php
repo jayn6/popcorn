@@ -756,7 +756,7 @@
 /* CARD */
 .profile-card{
     width:380px;
-    background:white;
+    background:#0f0f1d;
     padding:20px;
     border-radius:20px;
     text-align:center;
@@ -803,7 +803,7 @@
 
 .stat-box{
     width:48%;
-    background:#f5f5f5;
+    background:#0f0f1d;
     padding:10px;
     border-radius:10px;
 }
@@ -845,7 +845,7 @@
 /* EDIT CARD */
 .edit-card{
     width:350px;
-    background:white;
+    background: #0f0f1d ;
     padding:20px;
     border-radius:15px;
     display:flex;
@@ -960,19 +960,20 @@
         <div class="profile-header">
 
             <div class="avatar-wrapper">
-
+                @auth
                 <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
                      id="avatarPreview"
                      class="avatar-img">
-
+                
                 <label for="avatarInput" class="edit-icon">✏️</label>
-
+                
             </div>
 
             <div>
                 <h2>{{ auth()->user()->name }}</h2>
                 <p>{{ auth()->user()->email }}</p>
             </div>
+            @endauth
 
         </div>
 
@@ -1011,7 +1012,7 @@
 
 <!-- EDIT MODAL -->
 <div id="editModal">
-
+    @auth
     <form action="{{ route('profile.update') }}"
           method="POST"
           enctype="multipart/form-data"
@@ -1023,6 +1024,7 @@
         <h3>Edit Profile</h3>
 
         <!-- AVATAR -->
+       
         <div class="avatar-edit">
             <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
                  id="avatarPreview2"
@@ -1031,14 +1033,16 @@
             <label for="avatarInput" class="edit-icon">✏️</label>
             <input type="file" name="avatar" id="avatarInput" hidden>
         </div>
+        
 
         <input type="text" name="name" value="{{ auth()->user()->name }}">
         <input type="email" name="email" value="{{ auth()->user()->email }}">
-
+        
         <button type="submit">Save</button>
         <button type="button" id="closeEdit">Cancel</button>
 
     </form>
+    @endauth
 </div>
 <script>
 
