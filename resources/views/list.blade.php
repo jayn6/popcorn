@@ -1,8 +1,30 @@
 </html><!DOCTYPE html>
 <html lang="en">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <body>
+<style>.movies-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 15px;
+}
 
+@media (max-width: 1400px) {
+    .movies-container {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 1000px) {
+    .movies-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .movies-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}</style>
   
 @extends('layouts.app')
 
@@ -104,23 +126,38 @@
 @else
 
       <!-- Card 1 -->
-      @foreach($movies as $movie)
-      <div class="movie-card">
-        <span class="rank-badge">{{ $movie->rank }}</span>
-        <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
-        <div class="movie-overlay"></div>
-        <div class="movie-overlay-hover"><div class="play-btn"><a href="/movie/{{ $movie->id }}">▶</a></div></div>
-        <div class="movie-info">
-          <div class="movie-title">{{ $movie->title }}</div>
-          <div class="movie-rating">
-            <span class="stars">
-              <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
-            </span>
-            {{ $movie->rate }}
-          </div>
+     <div class="movies-container">
+    @foreach($movies as $movie)
+        <div class="movie-card">
+            <span class="rank-badge">{{ $movie->rank }}</span>
+
+            <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
+
+            <div class="movie-overlay"></div>
+
+            <div class="movie-overlay-hover">
+                <div class="play-btn">
+                    <a href="/movie/{{ $movie->id }}">▶</a>
+                </div>
+            </div>
+
+            <div class="movie-info">
+                <div class="movie-title">{{ $movie->title }}</div>
+
+                <div class="movie-rating">
+                    <span class="stars">
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star filled">★</span>
+                        <span class="star half">★</span>
+                    </span>
+                    {{ $movie->rate }}
+                </div>
+            </div>
         </div>
-      </div>
-      @endforeach
+    @endforeach
+</div>
   
 @endif
 

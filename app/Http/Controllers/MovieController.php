@@ -63,6 +63,19 @@ class MovieController extends Controller
     return view('list', compact('movies'));
     }
    
+     public function update(Request $request, $id){
+        $movie = Movie::findOrFail($id);
+
+        $movie->title = $request->title;
+        $movie->description = $request->description;
+        $movie->genre = $request->genre;
+        $movie->rate = $request->rate;
+        $movie->type = $request->type;
+
+        $movie->save();
+
+        return redirect('/');
+    }
     
     public function destroy($id){
         $movie = Movie::findOrFail($id);

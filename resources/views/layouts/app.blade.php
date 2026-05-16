@@ -396,7 +396,7 @@
 
     /* ── MOVIE CARD ── */
     .movie-card {
-      flex: 0 0 160px;
+      flex: 0 0 0 160px;
       scroll-snap-align: start;
       position: relative;
       border-radius: 0.6rem;
@@ -944,6 +944,8 @@
 
     <p class="footer-copy">© 2025 Popcorn. Made with 🍿 for film lovers everywhere.</p>
   </footer>
+    @auth
+
   <!-- BACKDROP -->
 <div id="profileBackdrop"></div>
 
@@ -995,7 +997,9 @@
         </div>
 
     @endif
+    @endauth
 @endauth
+
 </body>
 <script>
 
