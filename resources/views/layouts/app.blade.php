@@ -720,6 +720,144 @@
     .scroll-row .movie-card:nth-child(6) { animation-delay: 0.30s; }
     .scroll-row .movie-card:nth-child(7) { animation-delay: 0.35s; }
     .scroll-row .movie-card:nth-child(8) { animation-delay: 0.40s; }
+  
+    
+/* NAV */
+.nav-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+/* BACKDROP */
+#profileBackdrop{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    backdrop-filter: blur(10px);
+    background: rgba(0,0,0,0.4);
+    z-index: 100;
+}
+
+/* PROFILE MODAL */
+#profileModal{
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:101;
+}
+
+/* CARD */
+.profile-card{
+    width:380px;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+}
+
+/* HEADER */
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+/* AVATAR */
+.avatar-wrapper{
+    position:relative;
+}
+
+.avatar-img{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+/* EDIT ICON */
+.edit-icon{
+    position:absolute;
+    bottom:0;
+    right:0;
+    background:black;
+    color:white;
+    padding:5px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:12px;
+}
+
+/* STATS */
+.stats{
+    display:flex;
+    justify-content:space-between;
+    margin:15px 0;
+}
+
+.stat-box{
+    width:48%;
+    background:#f5f5f5;
+    padding:10px;
+    border-radius:10px;
+}
+
+/* FAVORITES */
+.favorites ul{
+    list-style:none;
+    padding:0;
+}
+
+.favorites li{
+    background:#eee;
+    margin:5px 0;
+    padding:5px;
+    border-radius:5px;
+}
+
+/* EDIT BUTTON */
+.edit-btn{
+    background:black;
+    color:white;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+/* EDIT MODAL */
+#editModal{
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:102;
+}
+
+/* EDIT CARD */
+.edit-card{
+    width:350px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.avatar-img-small{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+}
   </style>
 </head>
 <body>
@@ -753,11 +891,11 @@
     <div class="nav-actions">
       @auth
         <span class="nav-user-name">{{ auth()->user()->name }}</span>
-        <div class="nav-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
-      @else
-        <a href="{{ route('login') }}" class="nav-auth-link">Login</a>
-        <a href="{{ route('register') }}" class="nav-auth-link">Register</a>
-      @endauth
+<div class="nav-profile">
+    <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+     class="nav-avatar"
+     id="openProfile">
+</div>      @endauth
     </div>
   </nav>
     @yield('content')
@@ -810,3 +948,137 @@
 
     <p class="footer-copy">© 2025 Popcorn. Made with 🍿 for film lovers everywhere.</p>
   </footer>
+  <!-- BACKDROP -->
+<div id="profileBackdrop"></div>
+
+<!-- PROFILE MODAL -->
+<div id="profileModal">
+
+    <div class="profile-card">
+
+        <!-- HEADER -->
+        <div class="profile-header">
+
+            <div class="avatar-wrapper">
+
+                <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+                     id="avatarPreview"
+                     class="avatar-img">
+
+                <label for="avatarInput" class="edit-icon">✏️</label>
+
+            </div>
+
+            <div>
+                <h2>{{ auth()->user()->name }}</h2>
+                <p>{{ auth()->user()->email }}</p>
+            </div>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-box">
+                <h3>🎬 {{ auth()->user()->movies_watched ?? 0 }}</h3>
+                <p>Watched</p>
+            </div>
+
+            <div class="stat-box">
+                <h3>❤️ 5</h3>
+                <p>Favorites</p>
+            </div>
+
+        </div>
+
+        <!-- FAVORITES -->
+        <div class="favorites">
+            <h3>⭐ Favorites</h3>
+            <ul>
+                <li>Movie 1</li>
+                <li>Movie 2</li>
+                <li>Movie 3</li>
+                <li>Movie 4</li>
+                <li>Movie 5</li>
+            </ul>
+        </div>
+
+        <!-- EDIT BUTTON -->
+        <button id="openEdit" class="edit-btn">Edit Profile</button>
+
+    </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="editModal">
+
+    <form action="{{ route('profile.update') }}"
+          method="POST"
+          enctype="multipart/form-data"
+          class="edit-card">
+
+        @csrf
+        @method('PUT')
+
+        <h3>Edit Profile</h3>
+
+        <!-- AVATAR -->
+        <div class="avatar-edit">
+            <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+                 id="avatarPreview2"
+                 class="avatar-img-small">
+
+            <label for="avatarInput" class="edit-icon">✏️</label>
+            <input type="file" name="avatar" id="avatarInput" hidden>
+        </div>
+
+        <input type="text" name="name" value="{{ auth()->user()->name }}">
+        <input type="email" name="email" value="{{ auth()->user()->email }}">
+
+        <button type="submit">Save</button>
+        <button type="button" id="closeEdit">Cancel</button>
+
+    </form>
+</div>
+<script>
+
+const backdrop = document.getElementById("profileBackdrop");
+const profileModal = document.getElementById("profileModal");
+const editModal = document.getElementById("editModal");
+
+// OPEN PROFILE
+document.getElementById("openProfile").onclick = function () {
+    profileModal.style.display = "block";
+    backdrop.style.display = "block";
+};
+
+// OPEN EDIT
+document.getElementById("openEdit").onclick = function () {
+    editModal.style.display = "block";
+};
+
+// CLOSE EDIT
+document.getElementById("closeEdit").onclick = function () {
+    editModal.style.display = "none";
+};
+
+// CLICK BACKDROP CLOSE ALL
+backdrop.onclick = function () {
+    profileModal.style.display = "none";
+    editModal.style.display = "none";
+    backdrop.style.display = "none";
+};
+
+// IMAGE PREVIEW
+document.getElementById("avatarInput").onchange = function (event) {
+    const reader = new FileReader();
+
+    reader.onload = function () {
+        document.getElementById("avatarPreview").src = reader.result;
+        document.getElementById("avatarPreview2").src = reader.result;
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+};
+
+</script>

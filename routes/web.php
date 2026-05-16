@@ -35,7 +35,7 @@ Route::put('/movie/{id}',
 Route::post('/reviews', [ReviewController::class, 'store'])
 ->middleware('auth')
 ->name('reviews.store');
-
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/community', [ReviewController::class, 'community'])->name('community');
 Route::post('/watchlist/add/{movie}', [WatchlistController::class, 'add'])->name('watchlist.add');
 Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');

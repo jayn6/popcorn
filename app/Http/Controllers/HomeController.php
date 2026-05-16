@@ -14,6 +14,8 @@ public function index(){
     $topRated = Movie::where('type', 'top_rated')->take(8)->get();
 
     $upcoming = Movie::where('type', 'upcoming')->take(8)->get();    
-    return view('home', compact('trending', 'topRated', 'upcoming'));
+        $series = Movie::where('type', 'series')->take(8)->get();    
+
+    return view('home', compact('trending', 'topRated', 'upcoming', 'series'));
     }
 }

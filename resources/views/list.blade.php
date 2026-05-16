@@ -68,7 +68,10 @@
                 @if($movie->type == 'trending') selected @endif>
                 trending
             </option>
-
+                <option value="series"
+                    @if($movie->type == 'series') selected @endif>
+                    series
+                </option>
         </select>
     </td>    <td>
         <button type="submit">

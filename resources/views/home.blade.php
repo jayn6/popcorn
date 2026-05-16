@@ -152,6 +152,37 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
     </div>
   </section>
 
+  <section class="section" style="padding-top: 0;">
+    <div class="section-header">
+      <h2 class="section-title"><span class="icon">🎬</span> Series</h2>
+      <a href="#" class="section-see-all">See All →</a>
+    </div>
+    <hr>
+    <br>
+    <div class="scroll-row">
+
+      @foreach($series as $movie)
+
+      <div class="movie-card">
+        <span class="rank-badge">{{ $movie->year }}</span>
+        <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
+        <div class="movie-overlay"></div>
+        <div class="movie-overlay-hover"><div class="play-btn"><a href="/movie/{{ $movie->id }}">▶</a></div></div>
+        <div class="movie-info">
+          <div class="movie-title">{{ $movie->title }}</div>
+          <div class="movie-rating">
+            <span class="stars">
+              <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star half">★</span>
+            </span>
+            {{ $movie->rate }}
+          </div>
+        </div>
+      </div>
+      @endforeach
+
+    </div>
+  </section>
+
   <!-- ═══════════════════════════════ CTA SECTION ═══════════════════════════════ -->
   <div class="cta-section">
     <div class="cta-text">
