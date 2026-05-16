@@ -123,9 +123,7 @@
                 <div class="review-movie">
                     <img src="{{ $review->movie->poster }}" alt="">
                     <br><br>
-                    <!-- <p class="movie-name">
-                        {{ $review->movie->title }}
-                    </p> -->
+                   
 
                 </div>
                 
@@ -133,6 +131,7 @@
                 <div class="review-content">
 
                     <h4 class="review-user">
+                        <img src="{{ asset('storage/' . $review->user->avatar) }}" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; position: relative; top: 8.5px;">
                         {{ $review->user->name ?? 'Unknown User' }}
                     </h4>
 
