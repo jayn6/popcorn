@@ -6,6 +6,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="icon" type="png" href="{{ asset('storage/logo.png') }}">
+  
   <style>
     :root {
       --bg: #0f0f1d;
@@ -858,15 +860,21 @@
 </head>
 <body>
 <nav>
-    <a href="/" class="logo"><span>🍿</span> Popcorn</a>
+    <a href="/" class="logo"><span><img src="{{ asset('storage/logo.png') }}" style="width: 43px; height: 40px; border-radius: 50%;" alt="Popcorn Logo"></span> Popcorn</a>
 <ul class="nav-links">
-  <li><a href="/" class="active">Home</a></li>
-  <li><a href="/list">Movies</a></li>
-  <li><a href="/watchlist">Watchlist</a></li>
-  <li><a href="/community">Community</a></li>
-  @if(auth()->check() && auth()->user()->role === 'admin')
-  <li><a href="/admin/movie/create">add movies</a></li>
-  @endif
+  <li><a href="/" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
+
+<li><a href="/list" class="{{ request()->is('list') ? 'active' : '' }}">Movies</a></li>
+
+<li><a href="/watchlist" class="{{ request()->is('watchlist') ? 'active' : '' }}">Watchlist</a></li>
+
+<li><a href="/community" class="{{ request()->is('community') ? 'active' : '' }}">Community</a></li>
+
+@if(auth()->check() && auth()->user()->role === 'admin')
+<li><a href="/admin/movie/create" class="{{ request()->is('admin/movie/create') ? 'active' : '' }}">
+    add movies
+</a></li>
+@endif
   @auth
       <li><a href="#">{{ auth()->user()->name }}</a></li>
 
