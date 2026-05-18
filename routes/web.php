@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FollowController;
+
+Route::post('/follow/{id}', [FollowController::class, 'follow']);
+
+Route::delete('/unfollow/{id}', [FollowController::class, 'unfollow']);
+
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -42,6 +48,8 @@ Route::post('/watchlist/add/{movie}', [WatchlistController::class, 'add'])->name
 Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
 Route::post('/movie/fetch', [MovieController::class, 'store']);
 Route::get('/edit', [HomeController::class, 'edit'])->name('edit');
+
+Route::get('/user/{id}', [ProfileController::class, 'show']);
 
 Route::put('/update', [HomeController::class, 'update'])->name('update');
 Route::get('/profile/{id}', [HomeController::class, 'showProfile'])->name('profile');
