@@ -433,22 +433,7 @@
         <!-- RIGHT SIDE -->
         <div class="movie-right">
 
-            <div class="action-box">
-                    <form action="{{ route('movie.like', $movie->id) }}" method="POST">
-                        @csrf
-                        <button type="submit">♡ Like</button>
-                    </form>
-                <button onclick="toggleReviewForm()">★ Rate</button>
-                <form action="/watchlist/add/{{ $movie->id }}" method="POST">
-                    @csrf
-                    <button type="submit">➕ Watchlist</button>
-                </form>
-                <a href="https://www.playimdb.com/{{ $movie->title }}/{{ $movie->imdb_id }}" target="_blank">
-                    <button>watch</button>
-
-                </a>
-
-            </div>
+         
 
             <div class="stats-box">
 
