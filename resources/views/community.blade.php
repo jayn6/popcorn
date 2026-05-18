@@ -121,7 +121,7 @@
 
     background:rgba(0,0,0,0.75);
 
-    z-index:9998;
+    z-index:99999;
 }
 
 .profilePanel{
@@ -147,7 +147,7 @@
 
     padding:30px;
 
-    z-index:9999;
+    z-index:100000;
 
     box-shadow:0 0 40px rgba(0,0,0,0.6);
 
@@ -269,7 +269,193 @@
     cursor:pointer;
 }
 
+/* =========================
+   SEARCH BAR
+========================= */
+
+.search-bar{
+    position: relative;
+
+    margin: 120px auto 20px;
+
+    max-width: 500px;
+    width: 90%;
+
+    background:#111827;
+
+    padding:10px;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+    z-index:99999;
+}
+
+/* FORM */
+.search-bar form{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* INPUT */
+.search-bar input{
+    flex:1;
+
+    padding:10px 14px;
+
+    border:none;
+    border-radius:8px;
+
+    background:#1f2937;
+
+    color:white;
+
+    outline:none;
+
+    font-size:15px;
+}
+
+/* PLACEHOLDER */
+.search-bar input::placeholder{
+    color:#9ca3af;
+}
+
+/* BUTTON */
+.search-bar button{
+    padding:10px 16px;
+
+    border:none;
+    border-radius:8px;
+
+    background:#facc15;
+
+    color:black;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+/* BUTTON HOVER */
+.search-bar button:hover{
+    transform:scale(1.05);
+    background:#fde047;
+}
+
+/* =========================
+   SEARCH DROPDOWN
+========================= */
+
+.search-dropdown{
+    position:absolute;
+
+    top:100%;
+    left:0;
+
+    width:100%;
+
+    margin-top:10px;
+
+    background:#111827;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    z-index:9998;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.6);
+
+}
+
+/* USER ITEM */
+.search-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px;
+
+    cursor:pointer;
+
+    color:white;
+
+    border-bottom:1px solid #1f2937;
+
+    transition:0.2s;
+}
+
+/* HOVER */
+.search-item:hover{
+    background:#1f2937;
+}
+
+/* USER IMAGE */
+.search-item img{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+}
+
+/* USER INFO */
+.search-info{
+    display:flex;
+    flex-direction:column;
+}
+
+/* USER NAME */
+.search-info .name{
+    font-weight:bold;
+    font-size:15px;
+}
+
+/* USER EMAIL */
+.search-info .email{
+    color:#9ca3af;
+    font-size:13px;
+}
+
 </style>
+
+<div class="search-bar">
+    <form method="GET" action="{{ route('community') }}">
+        <input type="text" name="search" placeholder="Search users..."
+               value="{{ $search ?? '' }}" >
+        <button type="submit">Search</button>
+    </form>
+    @if($search && $users->count())
+
+    <div class="search-dropdown">
+
+        @foreach($users as $user)
+
+            <div class="search-item openProfile"
+                 data-profile="profile-{{ $user->id_user }}">
+
+                <img src="{{ asset('storage/' . $user->avatar) }}">
+
+                <div class="search-info">
+                    <span class="name">{{ $user->name }}</span>
+                </div>
+
+            </div>
+
+        @endforeach
+
+    </div>
+
+@endif
+
+    
+</div>
+
 
 <section class="movie-hero">
 
@@ -372,16 +558,11 @@
 
     @php
         $user = $review->user;
-
-        $isFollowing = auth()->user()
-            ->following
-            ->contains($user->id_user);
     @endphp
 
     <div
         class="profilePanel"
-        id="profile-{{ $user->id_user }}"
-    >
+        id="profile-{{ $user->id_user }}">
 
         <button class="closeProfile">X</button>
 
@@ -390,8 +571,7 @@
 
             <img
                 src="{{ asset('storage/' . $user->avatar) }}"
-                class="profile-avatar"
-            >
+                class="profile-avatar">
 
             <div class="profile-info">
 

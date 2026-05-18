@@ -25,9 +25,18 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Review added successfully!');
     }
 
-    public function community()
+    public function community(Request $request)
     {
+        $search = $request->input('search');
+
         $reviews = Review::with('user', 'movie')->latest()->get();
-        return view('community', compact('reviews'));
+
+        $users = collect();
+
+        if ($search) {
+            $users = \App\Models\User::where('name', 'like', '%' . $search . '%')->get();
+        }
+
+        return view('community', compact('reviews', 'users', 'search'));
     }
 }
