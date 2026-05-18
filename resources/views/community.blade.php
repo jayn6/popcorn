@@ -553,12 +553,15 @@
 <!-- OVERLAY -->
 <div class="profileOverlay"></div>
 
-<!-- UNIQUE USER POPUPS -->
-@foreach($reviews->unique('user.id_user') as $review)
+@php
+    $profileUsers = $reviews->pluck('user')->unique('id_user')->values();
+    if (!empty($search) && $users->count()) {
+        $profileUsers = $profileUsers->merge($users)->unique('id_user')->values();
+    }
+@endphp
 
-    @php
-        $user = $review->user;
-    @endphp
+<!-- UNIQUE USER POPUPS -->
+@foreach($profileUsers as $user)
 
     <div
         class="profilePanel"
@@ -650,6 +653,9 @@
 
 @endif
 
+            </div>
+        </div>
+
         <!-- FAVORITE MOVIES -->
         @if($user->likes->count())
 
@@ -723,19 +729,29 @@ const overlay =
 const openButtons =
     document.querySelectorAll(".openProfile");
 
+function hideAllProfilePanels() {
+    document.querySelectorAll(".profilePanel").forEach(panel => {
+        panel.style.display = "none";
+    });
+    overlay.style.display = "none";
+    document.body.style.overflow = "auto";
+}
+
 openButtons.forEach(button => {
 
     button.addEventListener("click", function(){
 
-        const profileId =
-            this.dataset.profile;
+        const profileId = this.dataset.profile;
+        const panel = document.getElementById(profileId);
 
-        const panel =
-            document.getElementById(profileId);
+        if (!panel) {
+            return;
+        }
+
+        hideAllProfilePanels();
 
         overlay.style.display = "block";
         panel.style.display = "block";
-
         document.body.style.overflow = "hidden";
 
     });
@@ -762,21 +778,7 @@ closeButtons.forEach(button => {
 
 });
 
-overlay.addEventListener("click", function(){
-
-    document
-        .querySelectorAll(".profilePanel")
-        .forEach(panel => {
-
-            panel.style.display = "none";
-
-        });
-
-    overlay.style.display = "none";
-
-    document.body.style.overflow = "auto";
-
-});
+overlay.addEventListener("click", hideAllProfilePanels);
 
 </script>
 

@@ -29,7 +29,13 @@ class ReviewController extends Controller
     {
         $search = $request->input('search');
 
-        $reviews = Review::with('user', 'movie')->latest()->get();
+        $reviews = Review::with([
+            'user.followers',
+            'user.following',
+            'user.likes.movie',
+            'user.reviews.movie',
+            'movie',
+        ])->latest()->get();
 
         $users = collect();
 
