@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\Like;
+
 class MovieController extends Controller
 {
     public function show ($id) {
@@ -85,5 +88,20 @@ class MovieController extends Controller
         return redirect('/');
     }
 
+    public function like($movieId)
+    {
+        $userId = Auth::id();
+
+        $like = Like::where('user_id', $userId)
+                    ->where('movie_id', $movieId)
+                    ->first();
+        if (!$like) {
+            Like::create([
+                'user_id' => $userId,
+                'movie_id' => $movieId
+            ]);
+        } 
+        return back();
+    }
    
 }

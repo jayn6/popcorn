@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Movie;
+use App\Models\Like;
 
 class HomeController extends Controller
 {
     //
 public function index(){
-  $trending = Movie::where('type', 'trending')->take(8)->get();
+    $trending = Movie::where('type', 'trending')->get();
 
-    $topRated = Movie::where('type', 'top_rated')->take(8)->get();
+    $topRated = Movie::where('type', 'top_rated')->get();
 
-    $upcoming = Movie::where('type', 'upcoming')->take(8)->get();    
-        $series = Movie::where('type', 'series')->take(8)->get();    
+    $upcoming = Movie::where('type', 'upcoming')->get();    
+    $series = Movie::where('type', 'series')->get(); 
+       
 
     return view('home', compact('trending', 'topRated', 'upcoming', 'series'));
     }
@@ -56,12 +58,14 @@ public function update(Request $request)
 
     return redirect()->route('home')
                      ->with('success', 'Profile updated!');
-}
+    }
 
-public function showProfile($id)
-{
-    $user = User::with('reviews.movie')->findOrFail($id);
+    public function showProfile($id)
+    {
+        $user = User::with('reviews.movie')->findOrFail($id);
 
-    return view('profile', compact('user'));
-}
+        return view('profile', compact('user'));
+    }
+
+
 }

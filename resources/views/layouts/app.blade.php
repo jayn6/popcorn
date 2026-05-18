@@ -684,6 +684,12 @@
       box-shadow: 0 0 12px rgba(250,204,21,0.5);
     }
 
+    .home-row{
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 20px;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
@@ -707,21 +713,15 @@
 
     /* Card stagger animation */
     .scroll-row .movie-card,
-    .scroll-row .wide-card {
+    .scroll-row .wide-card,
+    .movies-container .movie-card,
+    .home-row .movie-card {
       animation: cardSlideIn 0.5s ease both;
     }
     @keyframes cardSlideIn {
       from { opacity: 0; transform: translateX(20px); }
       to   { opacity: 1; transform: translateX(0); }
     }
-    .scroll-row .movie-card:nth-child(1) { animation-delay: 0.05s; }
-    .scroll-row .movie-card:nth-child(2) { animation-delay: 0.10s; }
-    .scroll-row .movie-card:nth-child(3) { animation-delay: 0.15s; }
-    .scroll-row .movie-card:nth-child(4) { animation-delay: 0.20s; }
-    .scroll-row .movie-card:nth-child(5) { animation-delay: 0.25s; }
-    .scroll-row .movie-card:nth-child(6) { animation-delay: 0.30s; }
-    .scroll-row .movie-card:nth-child(7) { animation-delay: 0.35s; }
-    .scroll-row .movie-card:nth-child(8) { animation-delay: 0.40s; }
   
 /* NAVBAR AVATAR */
 .nav-avatar{
@@ -976,12 +976,32 @@
 
     </div>
 
-    <!-- WATCHLIST -->
+    <!-- FAV MOVIES -->
+    @auth
+    @if(auth()->user()->likes->count())
+
     <div class="section">
 
-        
+        <div class="section-header">
+            <h3>Favourite Movies</h3>
+        </div>
+
+        <div class="movie-grid">
+
+            @foreach(auth()->user()->likes as $like)
+
+                <img class="movie-poster"
+                    src="{{ $like->movie->poster }}"
+                    alt="{{ $like->movie->title }}">
+
+            @endforeach
+
+        </div>
 
     </div>
+
+    @endif
+    @endauth
 
     <!-- RECENT REVIEWS -->
     @auth

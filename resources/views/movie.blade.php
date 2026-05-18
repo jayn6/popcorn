@@ -434,8 +434,10 @@
         <div class="movie-right">
 
             <div class="action-box">
-
-                <button>♡ Like</button>
+                    <form action="{{ route('movie.like', $movie->id) }}" method="POST">
+                        @csrf
+                        <button type="submit">♡ Like</button>
+                    </form>
                 <button onclick="toggleReviewForm()">★ Rate</button>
                 <form action="/watchlist/add/{{ $movie->id }}" method="POST">
                     @csrf

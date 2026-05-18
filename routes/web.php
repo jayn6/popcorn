@@ -45,3 +45,4 @@ Route::get('/edit', [HomeController::class, 'edit'])->name('edit');
 
 Route::put('/update', [HomeController::class, 'update'])->name('update');
 Route::get('/profile/{id}', [HomeController::class, 'showProfile'])->name('profile');
+Route::post('/like/{movie}', [MovieController::class, 'like'])->name('movie.like');

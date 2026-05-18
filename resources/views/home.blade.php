@@ -62,12 +62,12 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
     </div>
     <hr>
     <br>
-    <div class="scroll-row">
+    <div class="home-row">
 
       <!-- Card 1 -->
-       @foreach($trending as $movie)
+       @foreach($trending as $index => $movie)
 
-      <div class="movie-card">
+      <div class="movie-card" style="animation-delay: {{ $index * 0.05 }}s">
         <span class="rank-badge">{{ $movie->year }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
@@ -96,11 +96,11 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
     </div>
     <hr>
     <br>
-    <div class="scroll-row">
+    <div class="home-row">
 
-      @foreach($topRated as $movie)
+      @foreach($topRated as $index => $movie)
 
-      <div class="movie-card">
+      <div class="movie-card" style="animation-delay: {{ $index * 0.05 }}s">
         <span class="rank-badge">{{ $movie->year }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
@@ -128,11 +128,11 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
     </div>
     <hr>
     <br>
-    <div class="scroll-row">
+    <div class="home-row">
 
-      @foreach($upcoming as $movie)
+      @foreach($upcoming as $index => $movie)
 
-      <div class="movie-card">
+      <div class="movie-card" style="animation-delay: {{ $index * 0.05 }}s">
         <span class="rank-badge">{{ $movie->year }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>
@@ -159,11 +159,11 @@ A science teacher wakes up alone on a spaceship. As his memory returns, he uncov
     </div>
     <hr>
     <br>
-    <div class="scroll-row">
+    <div class="home-row">
 
-      @foreach($series as $movie)
+      @foreach($series as $index => $movie)
 
-      <div class="movie-card">
+      <div class="movie-card" style="animation-delay: {{ $index * 0.05 }}s">
         <span class="rank-badge">{{ $movie->year }}</span>
         <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
         <div class="movie-overlay"></div>

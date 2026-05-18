@@ -127,8 +127,8 @@
 
       <!-- Card 1 -->
      <div class="movies-container">
-    @foreach($movies as $movie)
-        <div class="movie-card">
+    @foreach($movies as $index => $movie)
+        <div class="movie-card" style="animation-delay: {{ $index * 0.05 }}s">
             <span class="rank-badge">{{ $movie->rank }}</span>
 
             <img class="movie-poster" src="{{ $movie->poster }}" alt="{{ $movie->title }}">
